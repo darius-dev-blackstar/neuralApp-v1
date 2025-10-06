@@ -5,6 +5,7 @@ import Users from "./pages/Users";
 import Clinics from "./pages/Clinics";
 import Operators from "./pages/Operators";
 import Logs from "./pages/Logs";
+import Settings from "./pages/Settings";
 
 export default function AppAdmin() {
   return (
@@ -16,6 +17,8 @@ export default function AppAdmin() {
         <Route path="/clinics" element={<Clinics />} />
         <Route path="/operators" element={<Operators />} />
         <Route path="/logs" element={<Logs />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>

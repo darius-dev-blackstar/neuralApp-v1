@@ -4,14 +4,11 @@
     "outDir": "./dist-admin",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/admin/*": ["./src/admin/*"],
-      "@/shared/*": ["./src/shared/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
     "src/admin/**/*",
-    "src/shared/**/*",
     "src/index.css",
     "src/vite-env.d.ts"
   ],

@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
-// Configuración específica para el Panel Admin
+// Configuración específica para el Panel Admin integrado
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -12,6 +12,7 @@ export default defineConfig({
   },
   build: {
     outDir: "dist-admin",
+    emptyOutDir: true,
     rollupOptions: {
       input: "./src/admin/mainAdmin.tsx",
       output: {
@@ -28,11 +29,11 @@ export default defineConfig({
     "process.env": process.env,
   },
   server: {
-    port: 5173,
+    port: 5175,
     host: true,
   },
   preview: {
-    port: 4173,
+    port: 4175,
     host: true,
   },
 });
