@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
-// Configuración específica para el Panel Admin
+// Configuración específica para el Dashboard de Doctores
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -11,9 +11,9 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "dist-admin",
+    outDir: "dist-doctor",
     rollupOptions: {
-      input: "./src/admin/mainAdmin.tsx",
+      input: "./src/doctor/mainDoctor.tsx",
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
@@ -28,11 +28,11 @@ export default defineConfig({
     "process.env": process.env,
   },
   server: {
-    port: 5173,
+    port: 5174,
     host: true,
   },
   preview: {
-    port: 4173,
+    port: 4174,
     host: true,
   },
 });

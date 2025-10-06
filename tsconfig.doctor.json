@@ -1,27 +1,27 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist-admin",
+    "outDir": "./dist-doctor",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/admin/*": ["./src/admin/*"],
+      "@/doctor/*": ["./src/doctor/*"],
       "@/shared/*": ["./src/shared/*"]
     }
   },
   "include": [
-    "src/admin/**/*",
-    "src/shared/**/*",
-    "src/index.css",
-    "src/vite-env.d.ts"
-  ],
-  "exclude": [
     "src/doctor/**/*",
+    "src/shared/**/*",
     "src/pages/**/*",
     "src/modules/**/*",
     "src/services/auth.ts",
     "src/components/layout/**/*",
     "src/components/ProtectedRoute.tsx",
+    "src/index.css",
+    "src/vite-env.d.ts"
+  ],
+  "exclude": [
+    "src/admin/**/*",
     "node_modules",
     "dist",
     "dist-admin",
