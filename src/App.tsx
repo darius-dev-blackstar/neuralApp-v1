@@ -13,11 +13,18 @@ import Estadisticas from "./pages/Estadisticas";
 import Configuracion from "./pages/Configuracion";
 import NotFound from "./pages/NotFound";
 
+// Admin Panel Components
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+
 const queryClient = new QueryClient();
 
 const App = () => {
   // Verificar si el usuario está autenticado
   const isAuthenticated = !!localStorage.getItem("accessToken");
+  const isAdminAuthenticated = !!localStorage.getItem("admin_token");
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -26,7 +33,28 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {/* Ruta de Login */}
+            {/* Rutas del Panel Admin */}
+            <Route 
+              path="/admin/login" 
+              element={
+                isAdminAuthenticated ? <Navigate to="/admin/dashboard" replace /> : <AdminLogin />
+              } 
+            />
+            
+            <Route
+              path="/admin"
+              element={
+                <AdminProtectedRoute>
+                  <AdminLayout />
+                </AdminProtectedRoute>
+              }
+            >
+              <Route index element={<Navigate to="/admin/dashboard" replace />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              {/* Aquí se agregarán más rutas del admin */}
+            </Route>
+
+            {/* Ruta de Login del Dashboard de Doctores */}
             <Route 
               path="/login" 
               element={
@@ -34,7 +62,7 @@ const App = () => {
               } 
             />
             
-            {/* Rutas Protegidas */}
+            {/* Rutas Protegidas del Dashboard de Doctores */}
             <Route
               path="/"
               element={
@@ -83,9 +111,7 @@ const App = () => {
             {/* Ruta por defecto */}
             <Route 
               path="*" 
-              element={
-                isAuthenticated ? <Navigate to="/" replace /> : <Navigate to="/login" replace />
-              } 
+              element={<NotFound />}
             />
           </Routes>
         </BrowserRouter>
