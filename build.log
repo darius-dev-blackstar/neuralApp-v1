@@ -1,0 +1,19 @@
+
+> vite_react_shadcn_ts@0.0.0 build
+> vite build
+
+vite v5.4.19 building for production...
+transforming...
+✓ 2550 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     1.10 kB │ gzip:   0.47 kB
+dist/assets/index-DZTMPUZH.css     64.12 kB │ gzip:  11.11 kB
+dist/assets/index-DlEbkcsM.js   1,090.57 kB │ gzip: 316.01 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 8.19s
+Build completado:  Sun Oct 5 07:45:07 UTC 2025
