@@ -1,0 +1,38 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist-admin",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/admin/*": ["./src/modules/admin/*"],
+      "@/components/admin/*": ["./src/components/admin/*"],
+      "@/pages/admin/*": ["./src/pages/admin/*"],
+      "@/services/admin*": ["./src/services/admin*"],
+      "@/config/*": ["./src/config/*"]
+    }
+  },
+  "include": [
+    "src/components/admin/**/*",
+    "src/pages/admin/**/*",
+    "src/services/adminAuth.ts",
+    "src/config/adminConfig.ts",
+    "src/modules/admin/**/*",
+    "src/components/ui/**/*",
+    "src/hooks/**/*",
+    "src/lib/**/*",
+    "src/main.tsx",
+    "src/App.tsx",
+    "src/vite-env.d.ts"
+  ],
+  "exclude": [
+    "src/pages/**/*",
+    "src/modules/**/*",
+    "src/services/auth.ts",
+    "src/components/layout/**/*",
+    "src/components/ProtectedRoute.tsx",
+    "node_modules",
+    "dist",
+    "dist-admin"
+  ]
+}

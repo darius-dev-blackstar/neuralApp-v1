@@ -21,10 +21,12 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const queryClient = new QueryClient();
 
+import AdminConfig from '@/config/adminConfig';
+
 const App = () => {
   // Verificar si el usuario está autenticado
   const isAuthenticated = !!localStorage.getItem("accessToken");
-  const isAdminAuthenticated = !!localStorage.getItem("admin_token");
+  const isAdminAuthenticated = !!localStorage.getItem(AdminConfig.storage.keys.token);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -35,21 +37,21 @@ const App = () => {
           <Routes>
             {/* Rutas del Panel Admin */}
             <Route 
-              path="/admin/login" 
+              path={AdminConfig.routes.login} 
               element={
-                isAdminAuthenticated ? <Navigate to="/admin/dashboard" replace /> : <AdminLogin />
+                isAdminAuthenticated ? <Navigate to={AdminConfig.routes.dashboard} replace /> : <AdminLogin />
               } 
             />
             
             <Route
-              path="/admin"
+              path={AdminConfig.routes.base}
               element={
                 <AdminProtectedRoute>
                   <AdminLayout />
                 </AdminProtectedRoute>
               }
             >
-              <Route index element={<Navigate to="/admin/dashboard" replace />} />
+              <Route index element={<Navigate to={AdminConfig.routes.dashboard} replace />} />
               <Route path="dashboard" element={<AdminDashboard />} />
               {/* Aquí se agregarán más rutas del admin */}
             </Route>

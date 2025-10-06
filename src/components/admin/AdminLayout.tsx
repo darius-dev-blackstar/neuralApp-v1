@@ -38,6 +38,7 @@ import {
   Search,
 } from 'lucide-react';
 import { adminAuthService } from '@/services/adminAuth';
+import AdminConfig from '@/config/adminConfig';
 import { toast } from 'sonner';
 
 const AdminLayout: React.FC = () => {
@@ -52,7 +53,7 @@ const AdminLayout: React.FC = () => {
     try {
       await adminAuthService.logout();
       toast.success('Sesión cerrada exitosamente');
-      navigate('/admin/login');
+      navigate(AdminConfig.routes.login);
     } catch (error) {
       console.error('Logout error:', error);
       toast.error('Error al cerrar sesión');
@@ -62,37 +63,37 @@ const AdminLayout: React.FC = () => {
   const menuItems = [
     {
       title: 'Dashboard',
-      href: '/admin/dashboard',
+      href: AdminConfig.routes.dashboard,
       icon: LayoutDashboard,
       permission: 'view_dashboard',
     },
     {
       title: 'Consultorios',
-      href: '/admin/clinics',
+      href: AdminConfig.routes.clinics,
       icon: Building2,
       permission: 'view_clinics',
     },
     {
       title: 'Médicos',
-      href: '/admin/doctors',
+      href: AdminConfig.routes.doctors,
       icon: UserCheck,
       permission: 'view_doctors',
     },
     {
       title: 'Usuarios',
-      href: '/admin/users',
+      href: AdminConfig.routes.users,
       icon: Users,
       permission: 'view_users',
     },
     {
       title: 'Logs',
-      href: '/admin/logs',
+      href: AdminConfig.routes.logs,
       icon: FileText,
       permission: 'view_logs',
     },
     {
       title: 'Configuración',
-      href: '/admin/settings',
+      href: AdminConfig.routes.settings,
       icon: Settings,
       permission: 'view_settings',
     },

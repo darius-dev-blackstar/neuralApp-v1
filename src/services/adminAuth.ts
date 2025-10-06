@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AdminConfig from '@/config/adminConfig';
 
 // Tipos para el panel admin
 export interface AdminUser {
@@ -28,19 +29,18 @@ export interface AdminAuthState {
   token: string | null;
 }
 
-// Configuración de la API del panel admin
-const ADMIN_API_BASE_URL = process.env.VITE_ADMIN_API_URL || 'http://localhost:3001/api/admin';
-
+// Configuración de la API del panel admin usando AdminConfig
 const adminApi = axios.create({
-  baseURL: ADMIN_API_BASE_URL,
+  baseURL: AdminConfig.getApiUrl(),
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Para cookies de sesión
 });
 
 // Interceptor para agregar el token a las peticiones
 adminApi.interceptors.request.use((config) => {
-  const token = localStorage.getItem('admin_token');
+  const token = localStorage.getItem(AdminConfig.storage.keys.token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -53,9 +53,8 @@ adminApi.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Token expirado o inválido
-      localStorage.removeItem('admin_token');
-      localStorage.removeItem('admin_user');
-      window.location.href = '/admin/login';
+      AdminConfig.storage.clearAdminStorage();
+      window.location.href = AdminConfig.routes.login;
     }
     return Promise.reject(error);
   }
@@ -81,8 +80,8 @@ export class AdminAuthService {
   }
 
   private loadAuthFromStorage(): void {
-    const token = localStorage.getItem('admin_token');
-    const userStr = localStorage.getItem('admin_user');
+    const token = localStorage.getItem(AdminConfig.storage.keys.token);
+    const userStr = localStorage.getItem(AdminConfig.storage.keys.user);
     
     if (token && userStr) {
       try {
@@ -104,9 +103,10 @@ export class AdminAuthService {
       const response = await adminApi.post('/auth/login', credentials);
       const { token, user, expiresIn } = response.data;
 
-      // Guardar en localStorage
-      localStorage.setItem('admin_token', token);
-      localStorage.setItem('admin_user', JSON.stringify(user));
+      // Guardar en localStorage con claves separadas del dashboard de doctores
+      localStorage.setItem(AdminConfig.storage.keys.token, token);
+      localStorage.setItem(AdminConfig.storage.keys.user, JSON.stringify(user));
+      localStorage.setItem(AdminConfig.storage.keys.lastLogin, new Date().toISOString());
 
       // Actualizar estado
       this.authState = {
@@ -136,7 +136,7 @@ export class AdminAuthService {
       const response = await adminApi.post('/auth/refresh');
       const { token } = response.data;
       
-      localStorage.setItem('admin_token', token);
+      localStorage.setItem(AdminConfig.storage.keys.token, token);
       this.authState.token = token;
       
       return token;
@@ -157,8 +157,8 @@ export class AdminAuthService {
   }
 
   public clearAuth(): void {
-    localStorage.removeItem('admin_token');
-    localStorage.removeItem('admin_user');
+    // Limpiar solo el almacenamiento del admin
+    AdminConfig.storage.clearAdminStorage();
     this.authState = {
       isAuthenticated: false,
       user: null,

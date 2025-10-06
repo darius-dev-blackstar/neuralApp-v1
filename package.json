@@ -5,10 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:admin": "BUILD_TARGET=admin vite --config vite.admin.config.ts",
     "build": "vite build",
+    "build:admin": "BUILD_TARGET=admin vite build --config vite.admin.config.ts",
     "build:dev": "vite build --mode development",
+    "build:admin:dev": "BUILD_TARGET=admin vite build --mode development --config vite.admin.config.ts",
+    "preview": "vite preview",
+    "preview:admin": "BUILD_TARGET=admin vite preview --config vite.admin.config.ts",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "lint:admin": "eslint src/components/admin src/pages/admin src/services/adminAuth.ts src/config/adminConfig.ts",
+    "type-check": "tsc --noEmit",
+    "type-check:admin": "tsc --noEmit --project tsconfig.admin.json"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.19",
@@ -82,6 +89,7 @@
     "lovable-tagger": "^1.1.10",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
+    "terser": "^5.44.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0",
     "vite": "^5.4.19"
